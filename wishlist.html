@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Wishlist | Toy Haven</title>
+    
+    <!-- SEO and Mobile Theme Color Configurations -->
+    <meta name="description" content="Track the toys you want, own or skip.">
+    <meta name="theme-color" content="#5b3df5">
+    
+    <!-- PWA & Icon Assets Linking -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="img/icon-192.png">
+    
+    <!-- Main Application Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="wishlist">
+
+    <!-- Keyboard Focus Target Skip Link -->
+    <a class="skip" href="#main">Skip to content</a>
+
+    <!-- ==========================================================================
+       SITE HEADER NAVIGATION 
+       ========================================================================== */ -->
+    <header class="site-header">
+        <a class="logo" href="index.html">🧸 Toy Haven</a>
+        
+        <!-- Mobile Navigation Menu Hamburger Component -->
+        <button class="burger" aria-label="Toggle menu" aria-expanded="false" aria-controls="menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav aria-label="Main">
+            <ul id="menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Shop</a></li>
+                <li><a href="cart.html">Cart<span id="count" class="badge">0</span></a></li>
+                <li><a href="wishlist.html" aria-current="page">Wishlist</a></li>
+                <li><a href="feedback.html">Support</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ==========================================================================
+       WISHLIST APP ENGINE VIEW
+       ========================================================================== */ -->
+    <main id="main">
+        <section class="wrap">
+            <h1>My Wishlist &amp; Collection</h1>
+            <div id="wishlist" class="grid"></div>
+        </section>
+    </main>
+
+    <!-- ==========================================================================
+       GLOBAL SITE FOOTER 
+       ========================================================================== */ -->
+    <footer class="site-footer">
+        <div>
+            <strong>Toy Haven</strong>
+            <p>Figurines, toys, board games &amp; diecast cars.</p>
+        </div>
+
+        <nav aria-label="Footer">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Shop</a></li>
+                <li><a href="cart.html">Cart</a></li>
+                <li><a href="wishlist.html">Wishlist</a></li>
+                <li><a href="feedback.html">Support</a></li>
+            </ul>
+        </nav>
+
+        <form id="newsletter" novalidate>
+            <label for="nl-email">Join our newsletter</label>
+            <div class="row">
+                <input id="nl-email" name="email" type="email" placeholder="you@example.com">
+                <button class="btn" type="submit">Subscribe</button>
+            </div>
+            <span class="err" id="e-email" role="alert"></span>
+        </form>
+    </footer>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

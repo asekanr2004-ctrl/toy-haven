@@ -1,0 +1,593 @@
+/* ==========================================================================
+   GLOBAL CONFIGURATIONS & DESIGN TOKENS
+   ========================================================================== */
+
+/* Toy Haven styles - mobile-first. Palette tokens live in :root. */
+:root {
+    --brand: #5b3df5;  /* Vibrant Violet */
+    --accent: #ffb703; /* Bright Toy Yellow */
+    --ink: #1d1b3a;    /* Deep Ink Body Text */
+    --bg: #fff8e7;     /* Warm Cream Background */
+    --card: #fff;      /* Pure White Card Base */
+    --ok: #1a7f37;     /* Safe Success Green */
+    --bad: #c62828;    /* Warning/Error Red */
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: "Fredoka", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   ACCESSIBILITY & UTILITIES (WAVE Audit Safeguards)
+   ========================================================================== */
+
+/* Skip Link for Keyboard Navigation */
+.skip {
+    position: absolute;
+    left: -999px;
+}
+
+.skip:focus {
+    left: 8px;
+    top: 8px;
+    background: #fff;
+    padding: 8px;
+    z-index: 99;
+}
+
+/* Screen Reader Only Utility */
+.sr {
+    position: absolute;
+    left: -999px;
+}
+
+a {
+    color: var(--brand);
+}
+
+/* ==========================================================================
+   NAVIGATION HEADER & HAMBURGER SYSTEM
+   ========================================================================== */
+
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 12px 16px;
+    background: var(--brand);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+/* Animated Hamburger Trigger */
+.burger {
+    background: none;
+    border: 0;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.burger span {
+    display: block;
+    width: 26px;
+    height: 3px;
+    background: #fff;
+    margin: 5px 0;
+    transition: .3s;
+}
+
+/* Transform Bars to 'X' When Open */
+.burger.open span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.burger.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.burger.open span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+.site-header nav {
+    width: 100%;
+}
+
+#menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: none;
+    flex-direction: column;
+}
+
+#menu.show {
+    display: flex;
+}
+
+#menu a {
+    display: block;
+    color: #fff;
+    padding: 10px 8px;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background .2s;
+}
+
+#menu a:hover,
+#menu a[aria-current] {
+    background: rgba(255, 255, 255, .2);
+}
+
+/* Cart & Wishlist Counter Badges */
+.badge {
+    background: var(--accent);
+    color: var(--ink);
+    border-radius: 20px;
+    padding: 0 8px;
+    margin-left: 6px;
+    font-size: .8rem;
+}
+
+/* ==========================================================================
+   LAYOUT STRUCTURE CONTROLLERS
+   ========================================================================== */
+
+.wrap {
+    max-width: 1100px;
+    margin: auto;
+    padding: 24px 16px;
+}
+
+.center {
+    text-align: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+.two {
+    display: grid;
+    gap: 24px;
+}
+
+/* ==========================================================================
+   INTERACTIVE REUSABLE BUTTON COMPONENT
+   ========================================================================== */
+
+.btn {
+    background: var(--brand);
+    color: #fff;
+    border: 0;
+    border-radius: 24px;
+    padding: 10px 20px;
+    font: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, .25);
+}
+
+.btn:active {
+    transform: scale(.95);
+}
+
+.btn.accent {
+    background: var(--accent);
+    color: var(--ink);
+}
+
+.btn.small {
+    padding: 4px 12px;
+}
+
+/* ==========================================================================
+   HOME VIEW HERO ROTATOR SLIDER & ANIMATIONS
+   ========================================================================== */
+
+.hero {
+    position: relative;
+    min-height: 320px;
+    color: #fff;
+    background: var(--brand);
+    text-align: center;
+    padding: 24px 16px;
+}
+
+.slide {
+    position: absolute;
+    inset: 0;
+    padding-top: 24px;
+    opacity: 0;
+    transition: opacity .8s;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+/* Floating Bob Animation for Hero Characters */
+.big {
+    font-size: 5rem;
+    animation: bob 2s ease-in-out infinite;
+}
+
+.hero .btn {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.hero .btn:hover {
+    transform: translateX(-50%) scale(1.05);
+}
+
+@keyframes bob {
+    50% {
+        transform: translateY(-12px);
+    }
+}
+
+/* ==========================================================================
+   E-COMMERCE PRODUCT CARD LAYOUT CONTROLS
+   ========================================================================== */
+
+.card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .1);
+    transition: transform .25s, box-shadow .25s;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .18);
+}
+
+.thumb {
+    font-size: 3.5rem;
+    text-align: center;
+    border-radius: 12px;
+    padding: 16px;
+    background: #e8e4ff;
+}
+
+/* Category-specific Pastel Shading Shields */
+.thumb.Toys { background: #ffe5e5; }
+.thumb.Board-Games { background: #e2f6e9; }
+.thumb.Diecast-Cars { background: #fff0c9; }
+
+.cat {
+    color: #666;
+    font-size: .9rem;
+    margin: 4px 0;
+}
+
+.price {
+    font-weight: 700;
+    color: var(--brand);
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.potd {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    max-width: 520px;
+}
+
+/* ==========================================================================
+   INPUT COMPONENTS & SECURE FORM SYSTEMS
+   ========================================================================== */
+
+.tools {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+#filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* Category Filter Chips */
+.chip {
+    border: 2px solid var(--brand);
+    background: #fff;
+    color: var(--brand);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font: inherit;
+    cursor: pointer;
+}
+
+.chip.on {
+    background: var(--brand);
+    color: #fff;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #bbb;
+    border-radius: 10px;
+    font: inherit;
+}
+
+/* High-Contrast Focus Ring Safeguard */
+input:focus,
+select:focus,
+textarea:focus,
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* Form Validation Tracking Border Indicators */
+input[aria-invalid=true],
+textarea[aria-invalid=true] {
+    border-color: var(--bad);
+}
+
+label {
+    display: block;
+    margin-top: 12px;
+    font-weight: 600;
+}
+
+.err {
+    color: var(--bad);
+    font-size: .9rem;
+    display: block;
+    min-height: 1.2em;
+}
+
+.ok {
+    color: var(--ok);
+    font-weight: 700;
+}
+
+/* Data Listing Layout Matrix Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Cart Quantity Modification Controls */
+.qty button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 0;
+    background: var(--accent);
+    cursor: pointer;
+}
+
+/* Modal Dialog Popups */
+dialog {
+    border: 0;
+    border-radius: 16px;
+    max-width: 380px;
+    padding: 20px;
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, .5);
+}
+
+/* ==========================================================================
+   SUPPORT VIEW FAQ ACCORDION ENGINE
+   ========================================================================== */
+
+.faq h3 {
+    margin: 8px 0 0;
+}
+
+.faq button {
+    width: 100%;
+    text-align: left;
+    padding: 12px;
+    border: 0;
+    background: #fff;
+    border-radius: 10px;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.panel {
+    padding: 10px 12px;
+    background: #fff;
+    border-radius: 0 0 10px 10px;
+}
+
+/* ==========================================================================
+   CHECKOUT OVERLAY SUCCESS MODAL SYSTEM
+   ========================================================================== */
+
+.success {
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, .96);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 20;
+}
+
+.success[hidden] {
+    display: none;
+}
+
+.tick {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: var(--ok);
+    color: #fff;
+    font-size: 3rem;
+    line-height: 90px;
+    animation: pop .6s cubic-bezier(.3, 1.6, .5, 1);
+}
+
+@keyframes pop {
+    from { transform: scale(0); }
+    to { transform: scale(1); }
+}
+
+/* ==========================================================================
+   GLOBAL FOOTER, SYSTEM TOASTS & LOOK-AHEAD EFFECTS
+   ========================================================================== */
+
+.site-footer {
+    background: var(--ink);
+    color: #fff;
+    padding: 24px 16px;
+    display: grid;
+    gap: 16px;
+}
+
+.site-footer a {
+    color: var(--accent);
+}
+
+.site-footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+.site-footer .row {
+    display: flex;
+    gap: 8px;
+}
+
+#toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%, 100px);
+    background: var(--ink);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 24px;
+    transition: transform .3s;
+    z-index: 30;
+}
+
+#toast.show {
+    transform: translate(-50%, 0);
+}
+
+/* Scroll-based Reveal Elements */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: .7s;
+}
+
+.reveal.seen {
+    opacity: 1;
+    transform: none;
+}
+
+/* ==========================================================================
+   RESPONSIVE LAYOUT RESPONSIVENESS (FLUID MEDIA QUERIES)
+   ========================================================================== */
+
+/* Tablet & Standard Phablet Framework Boundaries */
+@media (min-width: 600px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .tools {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+/* Desktop Monitor Viewport Breakpoints */
+@media (min-width: 900px) {
+    .burger {
+        display: none;
+    }
+    .site-header nav {
+        width: auto;
+    }
+    #menu,
+    #menu.show {
+        display: flex;
+        flex-direction: row;
+    }
+    .grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    .two {
+        grid-template-columns: 2fr 1fr;
+    }
+    .site-footer {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ==========================================================================
+   PREFERS REDUCED MOTION SAFEGUARD (Accessibility Metric Requirement)
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
