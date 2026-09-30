@@ -1,135 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Checkout | Toy Haven</title>
-    
-    <!-- SEO and Mobile Theme Color Configurations -->
-    <meta name="description" content="Complete your Toy Haven order.">
-    <meta name="theme-color" content="#5b3df5">
-    
-    <!-- PWA & Icon Assets Linking -->
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Toy Haven | Checkout</title>
+
+    <meta
+        name="description"
+        content="Complete your Toy Haven order."
+    >
+
+    <meta
+        name="theme-color"
+        content="#5b3df5"
+    >
+
+    <link rel="icon" href="img/favicon.svg">
     <link rel="apple-touch-icon" href="img/icon-192.png">
-    
-    <!-- Global Stylesheet -->
+    <link rel="manifest" href="manifest.json">
+
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body data-page="checkout">
 
-    <!-- Keyboard Focus Target Skip Link -->
-    <a class="skip" href="#main">Skip to content</a>
+    <a class="skip" href="#main">
+        Skip to main content
+    </a>
 
-    <!-- ==========================================================================
-       SITE HEADER NAVIGATION 
-       ========================================================================== */ -->
     <header class="site-header">
-        <a class="logo" href="index.html">🧸 Toy Haven</a>
 
-        <!-- Mobile Navigation Menu Hamburger Component -->
-        <button class="burger" aria-label="Toggle menu" aria-expanded="false" aria-controls="menu">
+        <a class="logo" href="index.html">
+            🧸 Toy Haven
+        </a>
+
+        <button
+            class="burger"
+            type="button"
+            aria-label="Open menu"
+            aria-expanded="false"
+        >
             <span></span>
             <span></span>
             <span></span>
         </button>
 
-        <nav aria-label="Main">
+        <nav>
             <ul id="menu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="products.html">Shop</a></li>
-                <li><a href="cart.html">Cart<span id="count" class="badge">0</span></a></li>
-                <li><a href="wishlist.html">Wishlist</a></li>
-                <li><a href="feedback.html">Support</a></li>
+
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+
+                <li>
+                    <a href="products.html">Products</a>
+                </li>
+
+                <li>
+                    <a href="cart.html">
+                        Cart
+                        <span class="badge" id="count">0</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="wishlist.html">Wishlist</a>
+                </li>
+
+                <li>
+                    <a href="checkout.html" aria-current="page">
+                        Checkout
+                    </a>
+                </li>
+
+                <li>
+                    <a href="feedback.html">Feedback</a>
+                </li>
+
             </ul>
         </nav>
     </header>
 
-    <!-- ==========================================================================
-       MAIN CHECKOUT PROCESS APPLICATION SECTION
-       ========================================================================== */ -->
-    <main id="main">
-        <!-- Responsive Multi-column Grid Structure Layout -->
-        <section class="wrap two">
+    <main id="main" class="wrap">
 
-            <div>
-                <h1>Checkout</h1>
-                <form id="checkout" novalidate>
-                    <label for="name">Full name</label>
-                    <input id="name" name="name" autocomplete="name">
-                    <span class="err" id="e-name" role="alert"></span>
+        <h1>Checkout</h1>
 
-                    <label for="email">Email</label>
-                    <input id="email" name="email" type="email" autocomplete="email">
-                    <span class="err" id="e-email" role="alert"></span>
+        <div class="two">
 
-                    <label for="address">Delivery address</label>
-                    <textarea id="address" name="address" rows="3"></textarea>
-                    <span class="err" id="e-address" role="alert"></span>
+            <section class="card">
 
-                    <label for="pay">Payment method</label>
+                <h2>Your Order</h2>
+
+                <div id="summary"></div>
+
+            </section>
+
+            <section class="card">
+
+                <h2>Delivery Details</h2>
+
+                <form id="checkout">
+
+                    <label for="name">
+                        Full Name
+                    </label>
+
+                    <input
+                        id="name"
+                        name="name"
+                        type="text"
+                    >
+
+                    <span id="e-name" class="err"></span>
+
+                    <label for="email">
+                        Email
+                    </label>
+
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                    >
+
+                    <span id="e-email" class="err"></span>
+
+                    <label for="address">
+                        Delivery Address
+                    </label>
+
+                    <textarea
+                        id="address"
+                        name="address"
+                        rows="4"
+                    ></textarea>
+
+                    <span id="e-address" class="err"></span>
+
+                    <label for="pay">
+                        Payment Method
+                    </label>
+
                     <select id="pay" name="pay">
-                        <option value="cod">Cash on Delivery</option>
-                        <option value="card">Card (simulation)</option>
+
+                        <option value="cash">
+                            Cash on Delivery
+                        </option>
+
+                        <option value="card">
+                            Card
+                        </option>
+
                     </select>
 
                     <div id="cardbox" hidden>
-                        <label for="card">Card number</label>
-                        <input id="card" name="card" inputmode="numeric" placeholder="16 digits">
-                        <span class="err" id="e-card" role="alert"></span>
+
+                        <label for="card">
+                            Card Number
+                        </label>
+
+                        <input
+                            id="card"
+                            name="card"
+                            type="text"
+                            inputmode="numeric"
+                            placeholder="16 digit card number"
+                        >
+
+                        <span id="e-card" class="err"></span>
+
                     </div>
-                    
-                    <button class="btn accent" type="submit">Place Order</button>
+
+                    <br>
+
+                    <button
+                        class="btn"
+                        type="submit"
+                    >
+                        Place Order
+                    </button>
+
                 </form>
-            </div>
 
-            <aside>
-                <h2>Order Summary</h2>
-                <div id="summary"></div>
-            </aside>
-            
-        </section>
+            </section>
 
-        <div id="success" class="success" hidden>
-            <div class="tick">✔</div>
-            <h2>Order placed!</h2>
-            <p>Thank you. Your order is on its way.</p>
-            <a class="btn" href="products.html">Keep shopping</a>
         </div>
+
     </main>
 
-    <!-- ==========================================================================
-       GLOBAL SITE FOOTER
-       ========================================================================== */ -->
-    <footer class="site-footer">
-        <div>
-            <strong>Toy Haven</strong>
-            <p>Figurines, toys, board games &amp; diecast cars.</p>
-        </div>
-        
-        <nav aria-label="Footer">
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="products.html">Shop</a></li>
-                <li><a href="cart.html">Cart</a></li>
-                <li><a href="wishlist.html">Wishlist</a></li>
-                <li><a href="feedback.html">Support</a></li>
-            </ul>
-        </nav>
+    <div
+        id="success"
+        class="success"
+        hidden
+    >
 
-        <form id="newsletter" novalidate>
-            <label for="nl-email">Join our newsletter</label>
-            <div class="row">
-                <input id="nl-email" name="email" type="email" placeholder="you@example.com">
-                <button class="btn" type="submit">Subscribe</button>
-            </div>
-            <span class="err" id="e-email" role="alert"></span>
-        </form>
+        <div class="tick">
+            ✓
+        </div>
+
+        <h2>
+            Order Successful!
+        </h2>
+
+        <p>
+            Thank you for shopping with Toy Haven.
+        </p>
+
+        <a
+            href="products.html"
+            class="btn"
+        >
+            Continue Shopping
+        </a>
+
+    </div>
+
+    <footer class="site-footer">
+
+        <div>
+            <h2>Toy Haven</h2>
+
+            <p>
+                Your place for toys, games and collectibles.
+            </p>
+        </div>
+
+        <div>
+            <h2>Quick Links</h2>
+
+            <ul>
+                <li>
+                    <a href="products.html">Products</a>
+                </li>
+
+                <li>
+                    <a href="cart.html">Cart</a>
+                </li>
+
+                <li>
+                    <a href="feedback.html">Support</a>
+                </li>
+            </ul>
+        </div>
+
+        <div>
+            <h2>Newsletter</h2>
+
+            <form id="newsletter">
+
+                <label for="nl-email">
+                    Email address
+                </label>
+
+                <div class="row">
+                    <input
+                        id="nl-email"
+                        name="email"
+                        type="email"
+                        placeholder="you@example.com"
+                    >
+
+                    <button class="btn accent" type="submit">
+                        Join
+                    </button>
+                </div>
+
+                <span id="e-email" class="err"></span>
+
+            </form>
+        </div>
+
     </footer>
 
-    <div id="toast" role="status" aria-live="polite"></div>
+    <div id="toast" role="status"></div>
 
     <script src="js/app.js"></script>
 </body>
+
 </html>

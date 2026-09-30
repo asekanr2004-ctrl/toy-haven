@@ -1,139 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Support | Toy Haven</title>
-    
-    <!-- SEO and Mobile Theme Color Configurations -->
-    <meta name="description" content="Send feedback and read our FAQ.">
-    <meta name="theme-color" content="#5b3df5">
-    
-    <!-- PWA & Icon Assets Linking -->
-    <link class="manifest" href="manifest.json">
-    <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Toy Haven | Feedback & Support</title>
+
+    <meta
+        name="description"
+        content="Contact Toy Haven and find answers to common questions."
+    >
+
+    <meta
+        name="theme-color"
+        content="#5b3df5"
+    >
+
+    <link rel="icon" href="img/favicon.svg">
     <link rel="apple-touch-icon" href="img/icon-192.png">
-    
-    <!-- Main Application Stylesheet -->
+    <link rel="manifest" href="manifest.json">
+
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body data-page="feedback">
 
-    <!-- Keyboard Focus Target Skip Link -->
-    <a class="skip" href="#main">Skip to content</a>
+    <a class="skip" href="#main">
+        Skip to main content
+    </a>
 
-    <!-- ==========================================================================
-       SITE HEADER NAVIGATION 
-       ========================================================================== */ -->
     <header class="site-header">
-        <a class="logo" href="index.html">🧸 Toy Haven</a>
-        
-        <!-- Mobile Navigation Menu Hamburger Component -->
-        <button class="burger" aria-label="Toggle menu" aria-expanded="false" aria-controls="menu">
+
+        <a class="logo" href="index.html">
+            🧸 Toy Haven
+        </a>
+
+        <button
+            class="burger"
+            type="button"
+            aria-label="Open menu"
+            aria-expanded="false"
+        >
             <span></span>
             <span></span>
             <span></span>
         </button>
 
-        <nav aria-label="Main">
+        <nav>
             <ul id="menu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="products.html">Shop</a></li>
-                <li><a href="cart.html">Cart<span id="count" class="badge">0</span></a></li>
-                <li><a href="wishlist.html">Wishlist</a></li>
-                <li><a href="feedback.html" aria-current="page">Support</a></li>
+
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+
+                <li>
+                    <a href="products.html">Products</a>
+                </li>
+
+                <li>
+                    <a href="cart.html">
+                        Cart
+                        <span class="badge" id="count">0</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="wishlist.html">Wishlist</a>
+                </li>
+
+                <li>
+                    <a href="checkout.html">Checkout</a>
+                </li>
+
+                <li>
+                    <a
+                        href="feedback.html"
+                        aria-current="page"
+                    >
+                        Feedback
+                    </a>
+                </li>
+
             </ul>
         </nav>
     </header>
 
-    <!-- ==========================================================================
-       MAIN SUPPORT AREA
-       ========================================================================== */ -->
-<main id="main">
-    <section class="wrap two">
-        
-        <!-- Left Column: Support Banner Asset Image -->
-        <div class="feedback-image-container" style="display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 16px;">
-            <img src="img/feedback.jpeg" alt="Toy Haven Customer Support Team Illustration" style="width: 100%; height: auto; max-height: 450px; object-fit: cover; border-radius: 16px;">
-        </div>
+    <main id="main" class="wrap">
 
-        <!-- Right Column: Validated Feedback and Support Message Form Box -->
-        <div>
-            <h1>Feedback</h1>
-            <form id="feedback" novalidate>
-                <label for="name">Name</label>
-                <input id="name" name="name">
-                <span class="err" id="e-name" role="alert"></span>
-                
-                <label for="email">Email</label>
-                <input id="email" name="email" type="email">
-                <span class="err" id="e-email" role="alert"></span>
-                
-                <label for="message">Message</label>
-                <textarea id="message" name="message" rows="5"></textarea>
-                <span class="err" id="e-message" role="alert"></span>
-                
-                <button class="btn accent" type="submit">Send</button>
-                <p id="ok" class="ok" role="status"></p>
-            </form>
-        </div>
-            
-            <div>
-                <h2>FAQ</h2>
-                <div class="faq">
-                    
-                    <h3>
-                        <button aria-expanded="false">How long does delivery take?</button>
-                    </h3>
-                    <div class="panel" hidden>Orders arrive within 3-5 working days.</div>
-                    
-                    <h3>
-                        <button aria-expanded="false">Can I return a toy?</button>
-                    </h3>
-                    <div class="panel" hidden>Yes, unopened items can be returned within 30 days.</div>
+        <h1>Feedback & Support</h1>
 
-                    <h3>
-                        <button aria-expanded="false">Are the board games suitable for kids?</button>
-                    </h3>
-                    <div class="panel" hidden>Each game lists a suggested age on its details window.</div>
-                    
+        <div class="two">
+
+            <section class="card">
+
+                <img
+                    src="img/feedback.jpeg"
+                    alt="Plush Panda toy"
+                    class="modal-image"
+                >
+
+                <h2>Send Us Feedback</h2>
+
+                <p>
+                    We would love to hear from you.
+                </p>
+
+                <form id="feedback">
+
+                    <label for="name">
+                        Name
+                    </label>
+
+                    <input
+                        id="name"
+                        name="name"
+                        type="text"
+                    >
+
+                    <span id="e-name" class="err"></span>
+
+                    <label for="email">
+                        Email
+                    </label>
+
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                    >
+
+                    <span id="e-email" class="err"></span>
+
+                    <label for="message">
+                        Message
+                    </label>
+
+                    <textarea
+                        id="message"
+                        name="message"
+                        rows="6"
+                    ></textarea>
+
+                    <span id="e-message" class="err"></span>
+
+                    <br>
+
+                    <button
+                        type="submit"
+                        class="btn"
+                    >
+                        Submit Feedback
+                    </button>
+
+                    <p
+                        id="ok"
+                        class="ok"
+                        aria-live="polite"
+                    ></p>
+
+                </form>
+
+            </section>
+
+            <section class="card faq">
+
+                <h2>Frequently Asked Questions</h2>
+
+                <h3>
+                    <button
+                        type="button"
+                        aria-expanded="false"
+                    >
+                        How can I add a product to my cart?
+                    </button>
+                </h3>
+
+                <div class="panel" hidden>
+                    <p>
+                        Go to the Products page and select
+                        Add to Cart on the product you want.
+                    </p>
                 </div>
-            </div>
-            
-        </section>
+
+                <h3>
+                    <button
+                        type="button"
+                        aria-expanded="false"
+                    >
+                        Can I save products for later?
+                    </button>
+                </h3>
+
+                <div class="panel" hidden>
+                    <p>
+                        Yes. Select Add to Wishlist and
+                        manage the item from the Wishlist page.
+                    </p>
+                </div>
+
+                <h3>
+                    <button
+                        type="button"
+                        aria-expanded="false"
+                    >
+                        Can I change my wishlist status?
+                    </button>
+                </h3>
+
+                <div class="panel" hidden>
+                    <p>
+                        Yes. You can select Interested,
+                        Owned or Not Interested.
+                    </p>
+                </div>
+
+                <h3>
+                    <button
+                        type="button"
+                        aria-expanded="false"
+                    >
+                        How do I place an order?
+                    </button>
+                </h3>
+
+                <div class="panel" hidden>
+                    <p>
+                        Add products to your cart, open
+                        Checkout, enter your details and
+                        select Place Order.
+                    </p>
+                </div>
+
+            </section>
+
+        </div>
+
     </main>
 
-    <!-- ==========================================================================
-       GLOBAL SITE FOOTER
-       ========================================================================== */ -->
     <footer class="site-footer">
-        <div>
-            <strong>Toy Haven</strong>
-            <p>Figurines, toys, board games &amp; diecast cars.</p>
-        </div>
-        
-        <nav aria-label="Footer">
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="products.html">Shop</a></li>
-                <li><a href="cart.html">Cart</a></li>
-                <li><a href="wishlist.html">Wishlist</a></li>
-                <li><a href="feedback.html">Support</a></li>
-            </ul>
-        </nav>
 
-        <form id="newsletter" novalidate>
-            <label for="nl-email">Join our newsletter</label>
-            <div class="row">
-                <input id="nl-email" name="email" type="email" placeholder="you@example.com">
-                <button class="btn" type="submit">Subscribe</button>
-            </div>
-            <span class="err" id="e-email" role="alert"></span>
-        </form>
+        <div>
+            <h2>Toy Haven</h2>
+
+            <p>
+                Your place for toys, games and collectibles.
+            </p>
+        </div>
+
+        <div>
+            <h2>Quick Links</h2>
+
+            <ul>
+                <li>
+                    <a href="products.html">Products</a>
+                </li>
+
+                <li>
+                    <a href="cart.html">Cart</a>
+                </li>
+
+                <li>
+                    <a href="wishlist.html">Wishlist</a>
+                </li>
+            </ul>
+        </div>
+
+        <div>
+            <h2>Newsletter</h2>
+
+            <form id="newsletter">
+
+                <label for="nl-email">
+                    Email address
+                </label>
+
+                <div class="row">
+                    <input
+                        id="nl-email"
+                        name="email"
+                        type="email"
+                        placeholder="you@example.com"
+                    >
+
+                    <button class="btn accent" type="submit">
+                        Join
+                    </button>
+                </div>
+
+                <span id="e-email" class="err"></span>
+
+            </form>
+        </div>
+
     </footer>
 
-    <div id="toast" role="status" aria-live="polite"></div>
+    <div id="toast" role="status"></div>
 
     <script src="js/app.js"></script>
 </body>
+
 </html>

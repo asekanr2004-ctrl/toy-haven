@@ -1,16 +1,11 @@
-/* ==========================================================================
-   GLOBAL CONFIGURATIONS & DESIGN TOKENS
-   ========================================================================== */
-
-/* Toy Haven styles - mobile-first. Palette tokens live in :root. */
 :root {
-    --brand: #5b3df5;  /* Vibrant Violet */
-    --accent: #ffb703; /* Bright Toy Yellow */
-    --ink: #1d1b3a;    /* Deep Ink Body Text */
-    --bg: #fff8e7;     /* Warm Cream Background */
-    --card: #fff;      /* Pure White Card Base */
-    --ok: #1a7f37;     /* Safe Success Green */
-    --bad: #c62828;    /* Warning/Error Red */
+    --brand: #5b3df5;
+    --accent: #ffb703;
+    --ink: #1d1b3a;
+    --bg: #fff8e7;
+    --card: #ffffff;
+    --ok: #1a7f37;
+    --bad: #c62828;
 }
 
 * {
@@ -23,43 +18,35 @@ html {
 
 body {
     margin: 0;
-    font-family: "Fredoka", system-ui, sans-serif;
+    font-family: system-ui, Arial, sans-serif;
     background: var(--bg);
     color: var(--ink);
     line-height: 1.5;
-}
-
-/* ==========================================================================
-   ACCESSIBILITY & UTILITIES (WAVE Audit Safeguards)
-   ========================================================================== */
-
-/* Skip Link for Keyboard Navigation */
-.skip {
-    position: absolute;
-    left: -999px;
-}
-
-.skip:focus {
-    left: 8px;
-    top: 8px;
-    background: #fff;
-    padding: 8px;
-    z-index: 99;
-}
-
-/* Screen Reader Only Utility */
-.sr {
-    position: absolute;
-    left: -999px;
 }
 
 a {
     color: var(--brand);
 }
 
-/* ==========================================================================
-   NAVIGATION HEADER & HAMBURGER SYSTEM
-   ========================================================================== */
+.skip {
+    position: absolute;
+    left: -999px;
+    top: 8px;
+}
+
+.skip:focus {
+    left: 8px;
+    background: #fff;
+    padding: 8px;
+    z-index: 100;
+}
+
+.sr {
+    position: absolute;
+    left: -9999px;
+}
+
+/* Header */
 
 .site-header {
     display: flex;
@@ -80,7 +67,6 @@ a {
     text-decoration: none;
 }
 
-/* Animated Hamburger Trigger */
 .burger {
     background: none;
     border: 0;
@@ -97,7 +83,6 @@ a {
     transition: .3s;
 }
 
-/* Transform Bars to 'X' When Open */
 .burger.open span:nth-child(1) {
     transform: translateY(8px) rotate(45deg);
 }
@@ -132,15 +117,13 @@ a {
     padding: 10px 8px;
     text-decoration: none;
     border-radius: 8px;
-    transition: background .2s;
 }
 
 #menu a:hover,
-#menu a[aria-current] {
+#menu a[aria-current="page"] {
     background: rgba(255, 255, 255, .2);
 }
 
-/* Cart & Wishlist Counter Badges */
 .badge {
     background: var(--accent);
     color: var(--ink);
@@ -150,9 +133,7 @@ a {
     font-size: .8rem;
 }
 
-/* ==========================================================================
-   LAYOUT STRUCTURE CONTROLLERS
-   ========================================================================== */
+/* Layout */
 
 .wrap {
     max-width: 1100px;
@@ -175,9 +156,7 @@ a {
     gap: 24px;
 }
 
-/* ==========================================================================
-   INTERACTIVE REUSABLE BUTTON COMPONENT
-   ========================================================================== */
+/* Buttons */
 
 .btn {
     background: var(--brand);
@@ -193,12 +172,12 @@ a {
 }
 
 .btn:hover {
-    transform: translateY(-2px) scale(1.04);
-    box-shadow: 0 6px 14px rgba(0, 0, 0, .25);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, .2);
 }
 
 .btn:active {
-    transform: scale(.95);
+    transform: scale(.96);
 }
 
 .btn.accent {
@@ -207,12 +186,10 @@ a {
 }
 
 .btn.small {
-    padding: 4px 12px;
+    padding: 6px 12px;
 }
 
-/* ==========================================================================
-   HOME VIEW HERO ROTATOR SLIDER & ANIMATIONS
-   ========================================================================== */
+/* Hero */
 
 .hero {
     position: relative;
@@ -221,12 +198,13 @@ a {
     background: var(--brand);
     text-align: center;
     padding: 24px 16px;
+    overflow: hidden;
 }
 
 .slide {
     position: absolute;
     inset: 0;
-    padding-top: 24px;
+    padding: 24px 16px;
     opacity: 0;
     transition: opacity .8s;
 }
@@ -235,7 +213,6 @@ a {
     opacity: 1;
 }
 
-/* Floating Bob Animation for Hero Characters */
 .big {
     font-size: 5rem;
     animation: bob 2s ease-in-out infinite;
@@ -249,7 +226,7 @@ a {
 }
 
 .hero .btn:hover {
-    transform: translateX(-50%) scale(1.05);
+    transform: translateX(-50%) translateY(-2px);
 }
 
 @keyframes bob {
@@ -258,9 +235,7 @@ a {
     }
 }
 
-/* ==========================================================================
-   E-COMMERCE PRODUCT CARD LAYOUT CONTROLS
-   ========================================================================== */
+/* Cards */
 
 .card {
     background: var(--card);
@@ -271,22 +246,44 @@ a {
 }
 
 .card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, .18);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .15);
+}
+
+.thumb-container {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    background: #eee;
+}
+
+.product-image-asset {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .3s;
+}
+
+.card:hover .product-image-asset {
+    transform: scale(1.05);
 }
 
 .thumb {
-    font-size: 3.5rem;
-    text-align: center;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
     border-radius: 12px;
-    padding: 16px;
+    margin-bottom: 12px;
     background: #e8e4ff;
 }
 
-/* Category-specific Pastel Shading Shields */
-.thumb.Toys { background: #ffe5e5; }
-.thumb.Board-Games { background: #e2f6e9; }
-.thumb.Diecast-Cars { background: #fff0c9; }
+.thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
 .cat {
     color: #666;
@@ -312,15 +309,13 @@ a {
     max-width: 520px;
 }
 
-/* ==========================================================================
-   INPUT COMPONENTS & SECURE FORM SYSTEMS
-   ========================================================================== */
+/* Product filters */
 
 .tools {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
 }
 
 #filters {
@@ -329,7 +324,6 @@ a {
     flex-wrap: wrap;
 }
 
-/* Category Filter Chips */
 .chip {
     border: 2px solid var(--brand);
     background: #fff;
@@ -345,6 +339,8 @@ a {
     color: #fff;
 }
 
+/* Forms */
+
 input,
 select,
 textarea {
@@ -355,7 +351,10 @@ textarea {
     font: inherit;
 }
 
-/* High-Contrast Focus Ring Safeguard */
+textarea {
+    resize: vertical;
+}
+
 input:focus,
 select:focus,
 textarea:focus,
@@ -365,9 +364,8 @@ a:focus-visible {
     outline-offset: 2px;
 }
 
-/* Form Validation Tracking Border Indicators */
-input[aria-invalid=true],
-textarea[aria-invalid=true] {
+input[aria-invalid="true"],
+textarea[aria-invalid="true"] {
     border-color: var(--bad);
 }
 
@@ -389,9 +387,15 @@ label {
     font-weight: 700;
 }
 
-/* Data Listing Layout Matrix Tables */
+/* Tables */
+
+.table-wrap {
+    overflow-x: auto;
+}
+
 table {
     width: 100%;
+    min-width: 600px;
     border-collapse: collapse;
     background: #fff;
 }
@@ -403,7 +407,6 @@ td {
     border-bottom: 1px solid #ddd;
 }
 
-/* Cart Quantity Modification Controls */
 .qty button {
     width: 30px;
     height: 30px;
@@ -413,11 +416,13 @@ td {
     cursor: pointer;
 }
 
-/* Modal Dialog Popups */
+/* Modal */
+
 dialog {
     border: 0;
     border-radius: 16px;
-    max-width: 380px;
+    max-width: 420px;
+    width: calc(100% - 32px);
     padding: 20px;
 }
 
@@ -425,9 +430,15 @@ dialog::backdrop {
     background: rgba(0, 0, 0, .5);
 }
 
-/* ==========================================================================
-   SUPPORT VIEW FAQ ACCORDION ENGINE
-   ========================================================================== */
+.modal-image {
+    width: 100%;
+    max-height: 250px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+
+/* FAQ */
 
 .faq h3 {
     margin: 8px 0 0;
@@ -451,9 +462,7 @@ dialog::backdrop {
     border-radius: 0 0 10px 10px;
 }
 
-/* ==========================================================================
-   CHECKOUT OVERLAY SUCCESS MODAL SYSTEM
-   ========================================================================== */
+/* Checkout success */
 
 .success {
     position: fixed;
@@ -483,13 +492,16 @@ dialog::backdrop {
 }
 
 @keyframes pop {
-    from { transform: scale(0); }
-    to { transform: scale(1); }
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
 }
 
-/* ==========================================================================
-   GLOBAL FOOTER, SYSTEM TOASTS & LOOK-AHEAD EFFECTS
-   ========================================================================== */
+/* Footer */
 
 .site-footer {
     background: var(--ink);
@@ -513,6 +525,12 @@ dialog::backdrop {
     gap: 8px;
 }
 
+.site-footer .row input {
+    flex: 1;
+}
+
+/* Toast */
+
 #toast {
     position: fixed;
     bottom: 20px;
@@ -524,13 +542,16 @@ dialog::backdrop {
     border-radius: 24px;
     transition: transform .3s;
     z-index: 30;
+    max-width: 90%;
+    text-align: center;
 }
 
 #toast.show {
     transform: translate(-50%, 0);
 }
 
-/* Scroll-based Reveal Elements */
+/* Scroll reveal */
+
 .reveal {
     opacity: 0;
     transform: translateY(30px);
@@ -542,52 +563,55 @@ dialog::backdrop {
     transform: none;
 }
 
-/* ==========================================================================
-   RESPONSIVE LAYOUT RESPONSIVENESS (FLUID MEDIA QUERIES)
-   ========================================================================== */
+/* Tablet */
 
-/* Tablet & Standard Phablet Framework Boundaries */
 @media (min-width: 600px) {
     .grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
     .tools {
         flex-direction: row;
         align-items: center;
     }
 }
 
-/* Desktop Monitor Viewport Breakpoints */
+/* Desktop */
+
 @media (min-width: 900px) {
     .burger {
         display: none;
     }
+
     .site-header nav {
         width: auto;
     }
+
     #menu,
     #menu.show {
         display: flex;
         flex-direction: row;
     }
+
     .grid {
         grid-template-columns: repeat(4, 1fr);
     }
+
     .two {
         grid-template-columns: 2fr 1fr;
     }
+
     .site-footer {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
-/* ==========================================================================
-   PREFERS REDUCED MOTION SAFEGUARD (Accessibility Metric Requirement)
-   ========================================================================== */
+/* Reduced motion */
 
 @media (prefers-reduced-motion: reduce) {
     * {
         animation: none !important;
         transition: none !important;
+        scroll-behavior: auto !important;
     }
 }

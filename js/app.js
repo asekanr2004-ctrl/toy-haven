@@ -1,524 +1,1027 @@
-/**
- * ============================================================================
- * TOY HAVEN PLATFORM CENTRAL APP CORE ORCHESTRATOR
- * ============================================================================
-*/
-// Centralized Immutable E-Commerce Product Catalog Dataset
 const PRODUCTS = [
-  // 1. FIGURINES REGISTRY SECTOR (Items 1-3)
-  { id: 1, name: "Dragon Knight Figure", category: "Figurines", price: 5500, image: "img/dragon-knight.jpg", desc: "Hand-painted 15cm collectible." },
-  { id: 2, name: "Space Ranger Statue", category: "Figurines", price: 6000, image: "img/space-ranger.jpg", desc: "Limited edition display statue." },
-  { id: 3, name: "Wizard Collectible", category: "Figurines", price: 8000, image: "img/wizard.jpg", desc: "Glow-in-the-dark staff." },
-  
-  // 2. TOYS REGISTRY SECTOR (Items 4-6)
-  { id: 4, name: "Robo Buddy", category: "Toys", price: 2500, image: "img/robo-buddy.jpg", desc: "Walking, talking robot. Ages 5+." },
-  { id: 5, name: "Plush Panda", category: "Toys", price: 1400, image: "img/plush-panda.jpg", desc: "Super-soft 30cm plush." },
-  { id: 6, name: "Building Blocks Set", category: "Toys", price: 2700, image: "img/building-blocks.jpg", desc: "200 colourful pieces." },
-  
-  // 3. BOARD GAMES REGISTRY SECTOR (Items 7-9)
-  { id: 7, name: "Castle Quest", category: "Board Games", price: 5000, image: "img/castle-quest.jpg", desc: "2-4 players. Ages 8+." },
-  { id: 8, name: "Word Wizards", category: "Board Games", price: 5500, image: "img/word-wizards.jpg", desc: "Fast family word game." },
-  { id: 9, name: "Treasure Trek", category: "Board Games", price: 2000, image: "img/treasure-trek.jpg", desc: "Co-operative adventure." },
-  
-  // 4. DIECAST CARS REGISTRY SECTOR (Items 10-12)
-  { id: 10, name: "Red Racer 1:32", category: "Diecast Cars", price: 1000, image: "img/red-racer.jpg", desc: "Opening doors, rubber tyres." },
-  { id: 11, name: "Classic Roadster", category: "Diecast Cars", price: 2100, image: "img/classic-roadster.jpg", desc: "Retro 1:32 collector car." },
-  { id: 12, name: "Rescue Truck", category: "Diecast Cars", price: 1650, image: "img/rescue-truck.jpg", desc: "Working ladder and lights." }
+    {
+        id: 1,
+        name: "Dragon Knight Figure",
+        category: "Figurines",
+        price: 5500,
+        image: "img/dragon-knight.jpg",
+        desc: "Hand-painted 15cm collectible."
+    },
+    {
+        id: 2,
+        name: "Space Ranger Statue",
+        category: "Figurines",
+        price: 6000,
+        image: "img/space-ranger.jpg",
+        desc: "Limited edition display statue."
+    },
+    {
+        id: 3,
+        name: "Wizard Collectible",
+        category: "Figurines",
+        price: 8000,
+        image: "img/wizard.jpg",
+        desc: "Glow-in-the-dark staff."
+    },
+    {
+        id: 4,
+        name: "Robo Buddy",
+        category: "Toys",
+        price: 2500,
+        image: "img/robo-buddy.jpg",
+        desc: "Walking, talking robot. Ages 5+."
+    },
+    {
+        id: 5,
+        name: "Plush Panda",
+        category: "Toys",
+        price: 1400,
+        image: "img/plush-panda.jpg",
+        desc: "Super-soft 30cm plush."
+    },
+    {
+        id: 6,
+        name: "Building Blocks Set",
+        category: "Toys",
+        price: 2700,
+        image: "img/building-blocks.jpg",
+        desc: "200 colourful pieces."
+    },
+    {
+        id: 7,
+        name: "Castle Quest",
+        category: "Board Games",
+        price: 5000,
+        image: "img/castle-quest.jpg",
+        desc: "2-4 players. Ages 8+."
+    },
+    {
+        id: 8,
+        name: "Word Wizards",
+        category: "Board Games",
+        price: 5500,
+        image: "img/word-wizards.jpg",
+        desc: "Fast family word game."
+    },
+    {
+        id: 9,
+        name: "Treasure Trek",
+        category: "Board Games",
+        price: 2000,
+        image: "img/treasure-trek.jpg",
+        desc: "Co-operative adventure."
+    },
+    {
+        id: 10,
+        name: "Red Racer 1:32",
+        category: "Diecast Cars",
+        price: 1000,
+        image: "img/red-racer.jpg",
+        desc: "Opening doors, rubber tyres."
+    },
+    {
+        id: 11,
+        name: "Classic Roadster",
+        category: "Diecast Cars",
+        price: 2100,
+        image: "img/classic-roadster.jpg",
+        desc: "Retro 1:32 collector car."
+    },
+    {
+        id: 12,
+        name: "Rescue Truck",
+        category: "Diecast Cars",
+        price: 1650,
+        image: "img/rescue-truck.jpg",
+        desc: "Working ladder and lights."
+    }
 ];
 
-const CATS = ["All", "Figurines", "Toys", "Board Games", "Diecast Cars"];
+const CATEGORIES = [
+    "All",
+    "Figurines",
+    "Toys",
+    "Board Games",
+    "Diecast Cars"
+];
 
-/* ----------------------------------------------------------------------------
-   2. REUSABLE HELPERS (Used globally across all features)
-   ---------------------------------------------------------------------------- */
+/* ---------- Helper Functions ---------- */
 
-// Reusable DOM selector fragment shorthand helper (replaces document.querySelector)
-const $ = (s, r = document) => r.querySelector(s);
+const $ = (selector, parent = document) =>
+    parent.querySelector(selector);
 
-// Reusable LocalStorage reader wrapper (safely handles missing keys or parsing errors)
-const load = (k, d) => { 
-  try { 
-    return JSON.parse(localStorage.getItem(k)) ?? d; 
-  } catch (e) { 
-    return d; 
-  } 
-};
-
-const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
-
-const money = n => "LKR " + n.toFixed(2);
-
-const byId = id => PRODUCTS.find(p => p.id === id);
-
-const cartItems = () => load("cart", []);
-
-
-function toast(msg) {
-  const t = $("#toast"); 
-  t.textContent = msg; 
-  t.classList.add("show");
-  clearTimeout(toast.t); 
-  toast.t = setTimeout(() => t.classList.remove("show"), 2000);
+function load(key, defaultValue) {
+    try {
+        return JSON.parse(localStorage.getItem(key)) ?? defaultValue;
+    } catch {
+        return defaultValue;
+    }
 }
 
-// Calculates total item weights
-function updateCount() {
-  const countBadge = $("#count");
-  if (countBadge) {
-    countBadge.textContent = cartItems().reduce((s, i) => s + i.qty, 0);
-  }
+function save(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
 }
 
-// Add to Cart functionality with LocalStorage 
+function money(value) {
+    return "LKR " + value.toFixed(2);
+}
+
+function getProduct(id) {
+    return PRODUCTS.find(product => product.id === id);
+}
+
+function getCart() {
+    return load("cart", []);
+}
+
+function showToast(message) {
+    const toast = $("#toast");
+
+    if (!toast) {
+        return;
+    }
+
+    toast.textContent = message;
+    toast.classList.add("show");
+
+    clearTimeout(showToast.timer);
+
+    showToast.timer = setTimeout(() => {
+        toast.classList.remove("show");
+    }, 2000);
+}
+
+function updateCartCount() {
+    const count = $("#count");
+
+    if (!count) {
+        return;
+    }
+
+    const totalItems = getCart().reduce(
+        (total, item) => total + item.qty,
+        0
+    );
+
+    count.textContent = totalItems;
+}
+
 function addToCart(id) {
-  const cart = cartItems();
-  const it = cart.find(i => i.id === id);
-  
-  it ? it.qty++ : cart.push({ id, qty: 1 });
-  
-  save("cart", cart); 
-  updateCount(); 
-  toast("Added to cart 🛒");
+    const cart = getCart();
+    const existingItem = cart.find(item => item.id === id);
+
+    if (existingItem) {
+        existingItem.qty++;
+    } else {
+        cart.push({
+            id: id,
+            qty: 1
+        });
+    }
+
+    save("cart", cart);
+    updateCartCount();
+    showToast("Added to cart 🛒");
 }
 
 function addToWishlist(id) {
-  const w = load("wishlist", {});
-  if (!w[id]) w[id] = "Interested"; 
-  
-  save("wishlist", w); 
-  toast("Saved to wishlist ♥");
+    const wishlist = load("wishlist", {});
+
+    if (!wishlist[id]) {
+        wishlist[id] = "Interested";
+    }
+
+    save("wishlist", wishlist);
+    showToast("Saved to wishlist ♥");
 }
 
+/* ---------- Form Validation ---------- */
+
+const required = label => value =>
+    value ? "" : label + " is required.";
+
+const emailRule = value =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)
+        ? ""
+        : "Enter a valid email address.";
 
 function validate(form, rules) {
-  let ok = true;
-  for (const n in rules) {
-    const el = form.elements[n];
-    if (!el) continue;
-    const msg = rules[n](el.value.trim());
-    
-    // Dynamically inject error strings into warning slots
-    const errorDisplaySlot = form.querySelector("#e-" + n);
-    if (errorDisplaySlot) errorDisplaySlot.textContent = msg;
-    
-    el.setAttribute("aria-invalid", !!msg);
-    if (msg) ok = false;
-  }
-  return ok;
+    let valid = true;
+
+    for (const fieldName in rules) {
+        const field = form.elements[fieldName];
+
+        if (!field) {
+            continue;
+        }
+
+        const error = rules[fieldName](field.value.trim());
+        const errorBox = form.querySelector("#e-" + fieldName);
+
+        if (errorBox) {
+            errorBox.textContent = error;
+        }
+
+        field.setAttribute("aria-invalid", error ? "true" : "false");
+
+        if (error) {
+            valid = false;
+        }
+    }
+
+    return valid;
 }
 
-// Form constraint variables
-const req = label => v => v ? "" : label + " is required.";
-const emailRule = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}\$/.test(v) ? "" : "Enter a valid email address.";
+/* ---------- Product Cards ---------- */
 
+function productCard(product) {
+    return `
+        <article class="card">
+            <div class="thumb-container">
+                <img
+                    src="${product.image}"
+                    alt="${product.name}"
+                    class="product-image-asset"
+                >
+            </div>
 
-function productCard(p) {
-  return `<article class="card">
-    <!-- Updated to read the local .jpg asset path instead of emojis -->
-    <div class="thumb-container" style="width: 100%; height: 200px; overflow: hidden; border-radius: 12px; margin-bottom: 12px;">
-      <img src="${p.image}" alt="${p.name}" class="product-image-asset" style="width: 100%; height: 100%; object-fit: cover; transition: transform .3s;">
-    </div>
-    <h3>${p.name}</h3>
-    <p class="cat">${p.category}</p>
-    <p class="price">${money(p.price)}</p>
-    <div class="actions">
-      <button class="btn small" data-cart="${p.id}">Add to Cart</button>
-      <button class="btn small accent" data-wish="${p.id}">Add to Wishlist</button>
-      <button class="btn small" data-info="${p.id}">Details</button>
-    </div>
-  </article>`;
+            <h3>${product.name}</h3>
+            <p class="cat">${product.category}</p>
+            <p class="price">${money(product.price)}</p>
+
+            <div class="actions">
+                <button type="button" class="btn small" data-cart="${product.id}">
+                    Add to Cart
+                </button>
+
+                <button type="button" class="btn small accent" data-wish="${product.id}">
+                    Add to Wishlist
+                </button>
+
+                <button type="button" class="btn small" data-info="${product.id}">
+                    Details
+                </button>
+            </div>
+        </article>
+    `;
 }
 
-document.addEventListener("click", e => {
-  const b = e.target.closest("button"); 
-  if (!b) return;
-  if (b.dataset.cart) addToCart(+b.dataset.cart);
-  if (b.dataset.wish) addToWishlist(+b.dataset.wish);
-  if (b.dataset.info) showModal(+b.dataset.info);
+/* ---------- Product Buttons ---------- */
+
+document.addEventListener("click", event => {
+    const button = event.target.closest("button");
+
+    if (!button) {
+        return;
+    }
+
+    if (button.dataset.cart) {
+        addToCart(Number(button.dataset.cart));
+    }
+
+    if (button.dataset.wish) {
+        addToWishlist(Number(button.dataset.wish));
+    }
+
+    if (button.dataset.info) {
+        showProductModal(Number(button.dataset.info));
+    }
 });
 
-function showModal(id) {
-  const p = byId(id);
-  $("#m-body").innerHTML = `
-    <h2 id="m-title">${p.emoji} ${p.name}</h2>
-    <p>${p.desc}</p>
-    <p class="cat">${p.category}</p>
-    <p class="price">${money(p.price)}</p>
-  `;
-  $("#modal").showModal();
-}
+function showProductModal(id) {
+    const product = getProduct(id);
+    const modal = $("#modal");
+    const body = $("#m-body");
 
-/* ----------------------------------------------------------------------------
-   3. SHARED GLOBAL SETUP 
-   ---------------------------------------------------------------------------- */
-
-// Responsive Hamburger Menu Activation
-const burger = $(".burger");
-if (burger) {
-  burger.addEventListener("click", () => {
-    const open = burger.classList.toggle("open");
-    $("#menu").classList.toggle("show", open);
-    burger.setAttribute("aria-expanded", open);
-  });
-}
-
-// Global Footer Newsletter Form 
-const newsletterForm = $("#newsletter");
-if (newsletterForm) {
-  newsletterForm.addEventListener("submit", e => {
-    e.preventDefault();
-    if (validate(e.target, { email: emailRule })) {
-      const list = load("newsletter", []); 
-      list.push(e.target.email.value.trim());
-      save("newsletter", list); 
-      e.target.reset(); 
-      toast("Subscribed! 🎉");
+    if (!product || !modal || !body) {
+        return;
     }
-  });
+
+    body.innerHTML = `
+        <img
+            src="${product.image}"
+            alt="${product.name}"
+            class="modal-image"
+        >
+
+        <h2 id="m-title">${product.name}</h2>
+
+        <p>${product.desc}</p>
+
+        <p class="cat">${product.category}</p>
+
+        <p class="price">${money(product.price)}</p>
+    `;
+
+    modal.showModal();
 }
 
-// Smooth Scroll Animation 
-const io = new IntersectionObserver(es => {
-  es.forEach(x => x.isIntersecting && x.target.classList.add("seen"));
-}, { threshold: .15 });
-document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+/* ---------- Mobile Menu ---------- */
 
-// Registering PWA service worker configurations
+const burger = $(".burger");
+
+if (burger) {
+    burger.addEventListener("click", () => {
+        const isOpen = burger.classList.toggle("open");
+        const menu = $("#menu");
+
+        if (menu) {
+            menu.classList.toggle("show", isOpen);
+        }
+
+        burger.setAttribute("aria-expanded", isOpen);
+    });
+}
+
+/* ---------- Newsletter ---------- */
+
+const newsletter = $("#newsletter");
+
+if (newsletter) {
+    newsletter.addEventListener("submit", event => {
+        event.preventDefault();
+
+        if (!validate(event.target, { email: emailRule })) {
+            return;
+        }
+
+        const emails = load("newsletter", []);
+        emails.push(event.target.email.value.trim());
+
+        save("newsletter", emails);
+
+        event.target.reset();
+
+        showToast("Subscribed! 🎉");
+    });
+}
+
+/* ---------- Scroll Animation ---------- */
+
+if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("seen");
+            }
+        });
+    }, {
+        threshold: 0.15
+    });
+
+    document.querySelectorAll(".reveal").forEach(element => {
+        observer.observe(element);
+    });
+} else {
+    document.querySelectorAll(".reveal").forEach(element => {
+        element.classList.add("seen");
+    });
+}
+
+/* ---------- Service Worker ---------- */
+
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js").catch(() => {});
+    navigator.serviceWorker.register("sw.js").catch(() => {});
 }
 
-updateCount();
+updateCartCount();
 
+/* ---------- Page Functions ---------- */
 
 const pages = {
-  
-  // HOME VIEW 
-  index() {
-    const slides = document.querySelectorAll(".slide"); 
-    let idx = 0;
-    
-    // Auto-Rotating Hero Banner System Carousel (4 seconds)
-    setInterval(() => { 
-      slides[idx].classList.remove("active"); 
-      idx = (idx + 1) % slides.length; 
-      slides[idx].classList.add("active"); 
-    }, 4000);
-    
-    /* Product of the Day Rule: Locks a single product choice all day, changes automatically at midnight */
-    const dayTimestamp = Math.floor(Date.now() / 86400000);
-    const productOfTheDay = PRODUCTS[dayTimestamp % PRODUCTS.length];
-    
-    const potdContainer = $("#potd");
-    if (potdContainer) potdContainer.innerHTML = productCard(productOfTheDay);
 
-    const featuredContainer = $("#featured");
-    if (featuredContainer) {
-      featuredContainer.innerHTML = [1, 4, 7, 10].map(id => productCard(byId(id))).join("");
-    }
-  },
+    /* HOME */
 
-  // PRODUCTS CATALOG 
-  products() {
-    let activeFilterCategory = "All";
-    const filterContainer = $("#filters");
+    index() {
+        const slides = document.querySelectorAll(".slide");
 
-    if (filterContainer) {
-      filterContainer.innerHTML = CATS.map(c => 
-        `<button class="chip${c === "All" ? " on" : ""}" data-cat="${c}">${c}</button>`
-      ).join("");
-    }
+        if (slides.length > 1) {
+            let currentSlide = 0;
 
-    const drawCatalogGrid = () => {
-      const searchQuery = $("#search").value.toLowerCase();
-      const filteredResultsList = PRODUCTS.filter(p => 
-        (activeFilterCategory === "All" || p.category === activeFilterCategory) && p.name.toLowerCase().includes(searchQuery)
-      );
-      
-      $("#grid").innerHTML = filteredResultsList.map(productCard).join("");
+            setInterval(() => {
+                slides[currentSlide].classList.remove("active");
 
-      $("#results").textContent = filteredResultsList.length 
-        ? filteredResultsList.length + " products found." 
-        : "No products found.";
-    };
+                currentSlide =
+                    (currentSlide + 1) % slides.length;
 
-    if (filterContainer) {
-      filterContainer.addEventListener("click", e => {
-        if (!e.target.dataset.cat) return;
-        activeFilterCategory = e.target.dataset.cat;
-        document.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", c.dataset.cat === activeFilterCategory));
-        drawCatalogGrid();
-      });
-    }
-
-    const searchBarElement = $("#search");
-    if (searchBarElement) searchBarElement.addEventListener("input", drawCatalogGrid);
-    
-    const modalCloseTrigger = $("#m-close");
-    if (modalCloseTrigger) modalCloseTrigger.addEventListener("click", () => $("#modal").close());
-    
-    drawCatalogGrid();
-  },
-
-  // SHOPPING CART 
-  cart() {
-    const drawCartRowsTable = () => {
-      const activeCartList = cartItems();
-      const cartDisplayWrapperBox = $("#cart");
-      
-      if (!activeCartList.length) {
-        cartDisplayWrapperBox.innerHTML = `
-          <p>Your cart is empty.</p>
-          <br>
-          <a class="btn" href="products.html">Shop Now</a>
-        `; 
-        return; 
-      }
-      
-      let invoiceRunningSumTotal = 0;
-      const htmlTableRowsList = activeCartList.map(item => {
-        const productData = byId(item.id);
-        const itemLineSubtotal = productData.price * item.qty; 
-        invoiceRunningSumTotal += itemLineSubtotal;
-        
-        return `<tr>
-          <td>${productData.emoji} ${productData.name}</td>
-          <td class="qty">
-            <button data-q="-1" data-id="${productData.id}" aria-label="Decrease quantity">-</button> 
-            <span style="margin: 0 6px; font-weight: bold;">${item.qty}</span> 
-            <button data-q="1" data-id="${productData.id}" aria-label="Increase quantity">+</button>
-          </td>
-          <td>${money(productData.price)}</td>
-          <td>${money(itemLineSubtotal)}</td>
-        </tr>`;
-      }).join("");
-
-      cartDisplayWrapperBox.innerHTML = `
-        <table>
-          <caption class="sr">Cart items list ledger</caption>
-          <thead>
-            <tr>
-              <th>Item Variant</th>
-              <th>Quantity</th>
-              <th>Unit Price</th>
-              <th>Subtotal</th>
-            </tr>
-          </thead>
-          <tbody>${htmlTableRowsList}</tbody>
-        </table>
-        <h2 style="margin: 20px 0;">Total Summary Cost: ${money(invoiceRunningSumTotal)}</h2>
-        <button class="btn" id="clear">Clear Cart</button> 
-        <a class="btn accent" href="checkout.html">Proceed to Checkout</a>
-      `;
-    };
-
-    $("#cart").addEventListener("click", e => {
-      const targetActionButton = e.target.closest("button"); 
-      if (!targetActionButton) return;
-      let currentCartMemoryState = cartItems();
-      
-      if (targetActionButton.id === "clear") {
-        if (confirm("Are you sure you want to completely empty your cart?")) {
-          currentCartMemoryState = [];
-        } else {
-          return;
-        }
-      } else if (targetActionButton.dataset.q) {
-        const matchedRecordItem = currentCartMemoryState.find(i => i.id === +targetActionButton.dataset.id); 
-        matchedRecordItem.qty += +targetActionButton.dataset.q;
-
-        currentCartMemoryState = currentCartMemoryState.filter(i => i.qty > 0);
-      } else {
-        return;
-      }
-      
-      save("cart", currentCartMemoryState); 
-      updateCount(); 
-      drawCartRowsTable();
-    });
-
-    drawCartRowsTable();
-  },
-
-  // CHECKOUT DATA INGESTION & INTERACTION 
-  checkout() {
-    const currentActiveCartList = cartItems();
-    const computedGrandSummaryTotal = currentActiveCartList.reduce((s, i) => s + byId(i.id).price * i.qty, 0);
-    
-    const summaryInvoiceDisplaySlot = $("#summary");
-    if (summaryInvoiceDisplaySlot) {
-      summaryInvoiceDisplaySlot.innerHTML = currentActiveCartList.length
-        ? `<ul>
-             ${currentActiveCartList.map(i => `<li>${byId(i.id).name} x ${i.qty} - ${money(byId(i.id).price * i.qty)}</li>`).join("")}
-           </ul>
-           <h3>Total Invoice Balance: ${money(computedGrandSummaryTotal)}</h3>`
-        : `<p>Your cart is empty. <a href="products.html">Shop Now</a></p>`;
-    }
-
-    const checkoutFormContainer = $("#checkout");
-    const paymentSelectorDropBox = $("#pay");
-    const simulatedCardBoxWrapper = $("#cardbox");
-
-    // Toggling custom card entry field display on option changes
-    if (paymentSelectorDropBox && simulatedCardBoxWrapper) {
-      paymentSelectorDropBox.addEventListener("change", e => { 
-        simulatedCardBoxWrapper.hidden = e.target.value !== "card"; 
-      });
-    }
-
-    if (checkoutFormContainer) {
-      checkoutFormContainer.addEventListener("submit", e => {
-        e.preventDefault();
-        
-        if (!currentActiveCartList.length) {
-          return toast("Your cart is empty.");
+                slides[currentSlide].classList.add("active");
+            }, 4000);
         }
 
-        const validationConstraintsSchema = {
-          name: req("Name"), 
-          email: emailRule, 
-          address: v => v.length >= 10 ? "" : "Enter your full delivery address."
-        };
+        const dayNumber =
+            Math.floor(Date.now() / 86400000);
 
-        if (checkoutFormContainer.pay.value === "card") {
-          validationConstraintsSchema.card = v => /^\d{16}\$/.test(v.replace(/\s/g, "")) ? "" : "Card number must be 16 digits.";
-        } else {
-          const errorCardField = $("#e-card");
-          if (errorCardField) errorCardField.textContent = "";
+        const productOfTheDay =
+            PRODUCTS[dayNumber % PRODUCTS.length];
+
+        const potd = $("#potd");
+
+        if (potd) {
+            potd.innerHTML =
+                productCard(productOfTheDay);
         }
 
-        if (!validate(checkoutFormContainer, validationConstraintsSchema)) return;
+        const featured = $("#featured");
 
-        const globalOrderLogsLedger = load("orders", []);
-        globalOrderLogsLedger.push({
-          date: new Date().toISOString(), 
-          name: checkoutFormContainer.name.value.trim(), 
-          email: checkoutFormContainer.email.value.trim(), 
-          items: currentActiveCartList, 
-          total: computedGrandSummaryTotal, 
-          payment: checkoutFormContainer.pay.value
+        if (featured) {
+            const featuredIds = [1, 4, 7, 10];
+
+            featured.innerHTML = featuredIds
+                .map(id => productCard(getProduct(id)))
+                .join("");
+        }
+    },
+
+    /* PRODUCTS */
+
+    products() {
+        let activeCategory = "All";
+
+        const filterContainer = $("#filters");
+        const search = $("#search");
+        const grid = $("#grid");
+        const results = $("#results");
+        const modalClose = $("#m-close");
+
+        if (filterContainer) {
+            filterContainer.innerHTML =
+                CATEGORIES.map(category => `
+                    <button
+                        type="button"
+                        class="chip ${category === "All" ? "on" : ""}"
+                        data-cat="${category}"
+                    >
+                        ${category}
+                    </button>
+                `).join("");
+        }
+
+        function displayProducts() {
+            const searchText =
+                search ? search.value.toLowerCase() : "";
+
+            const filteredProducts = PRODUCTS.filter(product => {
+                const categoryMatch =
+                    activeCategory === "All" ||
+                    product.category === activeCategory;
+
+                const searchMatch =
+                    product.name
+                        .toLowerCase()
+                        .includes(searchText);
+
+                return categoryMatch && searchMatch;
+            });
+
+            if (grid) {
+                grid.innerHTML =
+                    filteredProducts.map(productCard).join("");
+            }
+
+            if (results) {
+                results.textContent =
+                    filteredProducts.length +
+                    " product" +
+                    (filteredProducts.length === 1 ? "" : "s") +
+                    " found.";
+            }
+        }
+
+        if (filterContainer) {
+            filterContainer.addEventListener("click", event => {
+                const category = event.target.dataset.cat;
+
+                if (!category) {
+                    return;
+                }
+
+                activeCategory = category;
+
+                document.querySelectorAll(".chip").forEach(chip => {
+                    chip.classList.toggle(
+                        "on",
+                        chip.dataset.cat === activeCategory
+                    );
+                });
+
+                displayProducts();
+            });
+        }
+
+        if (search) {
+            search.addEventListener("input", displayProducts);
+        }
+
+        if (modalClose) {
+            modalClose.addEventListener("click", () => {
+                $("#modal").close();
+            });
+        }
+
+        displayProducts();
+    },
+
+    /* CART */
+
+    cart() {
+        const cartBox = $("#cart");
+
+        if (!cartBox) {
+            return;
+        }
+
+        function displayCart() {
+            const cart = getCart();
+
+            if (!cart.length) {
+                cartBox.innerHTML = `
+                    <p>Your cart is empty.</p>
+                    <br>
+                    <a class="btn" href="products.html">
+                        Shop Now
+                    </a>
+                `;
+
+                return;
+            }
+
+            let total = 0;
+
+            const rows = cart.map(item => {
+                const product = getProduct(item.id);
+
+                if (!product) {
+                    return "";
+                }
+
+                const subtotal =
+                    product.price * item.qty;
+
+                total += subtotal;
+
+                return `
+                    <tr>
+                        <td>
+                            ${product.name}
+                        </td>
+
+                        <td class="qty">
+                            <button
+                                type="button"
+                                data-q="-1"
+                                data-id="${product.id}"
+                                aria-label="Decrease quantity"
+                            >
+                                -
+                            </button>
+
+                            <span>${item.qty}</span>
+
+                            <button
+                                type="button"
+                                data-q="1"
+                                data-id="${product.id}"
+                                aria-label="Increase quantity"
+                            >
+                                +
+                            </button>
+                        </td>
+
+                        <td>
+                            ${money(product.price)}
+                        </td>
+
+                        <td>
+                            ${money(subtotal)}
+                        </td>
+                    </tr>
+                `;
+            }).join("");
+
+            cartBox.innerHTML = `
+                <div class="table-wrap">
+                    <table>
+                        <caption class="sr">
+                            Shopping cart items
+                        </caption>
+
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Quantity</th>
+                                <th>Unit Price</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            ${rows}
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>Total: ${money(total)}</h2>
+
+                <button
+                    type="button"
+                    class="btn"
+                    id="clear"
+                >
+                    Clear Cart
+                </button>
+
+                <a
+                    class="btn accent"
+                    href="checkout.html"
+                >
+                    Proceed to Checkout
+                </a>
+            `;
+        }
+
+        cartBox.addEventListener("click", event => {
+            const button =
+                event.target.closest("button");
+
+            if (!button) {
+                return;
+            }
+
+            let cart = getCart();
+
+            if (button.id === "clear") {
+                if (!confirm("Are you sure you want to clear your cart?")) {
+                    return;
+                }
+
+                cart = [];
+            }
+
+            if (button.dataset.q) {
+                const item = cart.find(
+                    product =>
+                        product.id ===
+                        Number(button.dataset.id)
+                );
+
+                if (item) {
+                    item.qty += Number(button.dataset.q);
+                }
+
+                cart = cart.filter(item => item.qty > 0);
+            }
+
+            save("cart", cart);
+            updateCartCount();
+            displayCart();
         });
 
-        save("orders", globalOrderLogsLedger); 
-        localStorage.removeItem("cart"); 
-        
-        // Reset state metrics
-        updateCount(); 
+        displayCart();
+    },
 
-        const successOverlayScreen = $("#success");
-        if (successOverlayScreen) successOverlayScreen.hidden = false;
-      });
-    }
-  },
+    /* CHECKOUT */
 
-  //  WISHLIST STATUS ADJUSTER & DELETIONS 
-  wishlist() {
-    const drawWishlistCollectionCards = () => {
-      const storedWishlistObjectMap = load("wishlist", {});
-      const wishlistKeysArrayIdsList = Object.keys(storedWishlistObjectMap);
-      const gridTargetBoxElement = $("#wishlist");
+    checkout() {
+        const form = $("#checkout");
+        const summary = $("#summary");
+        const payment = $("#pay");
+        const cardBox = $("#cardbox");
 
-      if (gridTargetBoxElement) {
-        gridTargetBoxElement.innerHTML = wishlistKeysArrayIdsList.length 
-          ? wishlistKeysArrayIdsList.map(idStringKey => {
-              const itemProductMeta = byId(+idStringKey);
-              return `<article class="card">
-                <div class="thumb ${itemProductMeta.category.replace(" ", "-")}" aria-hidden="true">${itemProductMeta.emoji}</div>
-                <h3>${itemProductMeta.name}</h3>
-                
-                <label for="s${idStringKey}">Status Collection Tag</label>
-                <select id="s${idStringKey}" data-id="${idStringKey}">
-                  ${["Interested", "Owned", "Not Interested"].map(statusOptionString => 
-                    `<option${storedWishlistObjectMap[idStringKey] === statusOptionString ? " selected" : ""}>${statusOptionString}</option>`
-                  ).join("")}
-                </select>
-                
-                <p style="margin-top:12px;">
-                  <button class="btn small" style="background: var(--bad); width:100%;" data-rm="${idStringKey}">Remove From List</button>
-                </p>
-              </article>`;
-            }).join("") 
-          : `<p>Nothing saved yet. <a href="products.html">Browse products</a></p>`;
-      }
-    };
-
-    const interactiveGridContainer = $("#wishlist");
-    if (interactiveGridContainer) {
-      interactiveGridContainer.addEventListener("change", e => {
-        const currentWishlistRegistry = load("wishlist", {}); 
-        currentWishlistRegistry[e.target.dataset.id] = e.target.value; 
-        
-        save("wishlist", currentWishlistRegistry); 
-        toast("Status tag updated! ✏️");
-      });
-
-      interactiveGridContainer.addEventListener("click", e => {
-        if (!e.target.dataset.rm) return;
-        
-        const currentWishlistRegistry = load("wishlist", {}); 
-        delete currentWishlistRegistry[e.target.dataset.rm]; 
-        
-        save("wishlist", currentWishlistRegistry); 
-        drawWishlistCollectionCards();
-        toast("Removed from collection wishlist");
-      });
-    }
-
-    drawWishlistCollectionCards();
-  },
-
-  // SUPPORT FEEDBACK PIPELINES & FAQ 
-  feedback() {
-    const primaryFeedbackForm = $("#feedback");
-    
-    if (primaryFeedbackForm) {
-      primaryFeedbackForm.addEventListener("submit", e => {
-        e.preventDefault();
-        
-        const feedbackValidationRules = {
-          name: req("Name"), 
-          email: emailRule, 
-          message: v => v.length >= 10 ? "" : "Message must be at least 10 characters."
-        };
-
-        if (!validate(primaryFeedbackForm, feedbackValidationRules)) return;
-        
-        const storedFeedbackSubmissionsArray = load("feedback", []);
-        storedFeedbackSubmissionsArray.push({
-          name: primaryFeedbackForm.name.value.trim(), 
-          email: primaryFeedbackForm.email.value.trim(), 
-          message: primaryFeedbackForm.message.value.trim(), 
-          date: new Date().toISOString()
-        });
-        
-        save("feedback", storedFeedbackSubmissionsArray); 
-        primaryFeedbackForm.reset(); 
-        
-        const feedbackSuccessSlot = $("#ok");
-        if (feedbackSuccessSlot) {
-            feedbackSuccessSlot.textContent = "Thanks! Your feedback has been logged successfully. 🎉";
+        if (!form) {
+            return;
         }
-      });
-    }
 
-    document.querySelectorAll(".faq button").forEach(b => {
-      b.addEventListener("click", () => {
-        const panelSectionSibling = b.parentElement.nextElementSibling;
-        if (!panelSectionSibling) return;
-        
-        const targetOpenStateVisibilityToggle = panelSectionSibling.hidden;
-        panelSectionSibling.hidden = !targetOpenStateVisibilityToggle; 
-        
-        b.setAttribute("aria-expanded", targetOpenStateVisibilityToggle);
-      });
-    });
-  }
+        function displaySummary() {
+            const cart = getCart();
+
+            let total = 0;
+
+            if (!cart.length) {
+                summary.innerHTML = `
+                    <p>
+                        Your cart is empty.
+                        <a href="products.html">Shop Now</a>
+                    </p>
+                `;
+
+                return;
+            }
+
+            const items = cart.map(item => {
+                const product = getProduct(item.id);
+                const subtotal =
+                    product.price * item.qty;
+
+                total += subtotal;
+
+                return `
+                    <li>
+                        ${product.name} × ${item.qty}
+                        - ${money(subtotal)}
+                    </li>
+                `;
+            }).join("");
+
+            summary.innerHTML = `
+                <ul>
+                    ${items}
+                </ul>
+
+                <h3>
+                    Total: ${money(total)}
+                </h3>
+            `;
+        }
+
+        if (payment && cardBox) {
+            payment.addEventListener("change", () => {
+                cardBox.hidden =
+                    payment.value !== "card";
+            });
+        }
+
+        form.addEventListener("submit", event => {
+            event.preventDefault();
+
+            const cart = getCart();
+
+            if (!cart.length) {
+                showToast("Your cart is empty.");
+                return;
+            }
+
+            const rules = {
+                name: required("Name"),
+
+                email: emailRule,
+
+                address: value =>
+                    value.length >= 10
+                        ? ""
+                        : "Enter your full delivery address."
+            };
+
+            if (form.pay.value === "card") {
+                rules.card = value =>
+                    /^\d{16}$/.test(
+                        value.replace(/\s/g, "")
+                    )
+                        ? ""
+                        : "Card number must be 16 digits.";
+            } else {
+                const cardError = $("#e-card");
+
+                if (cardError) {
+                    cardError.textContent = "";
+                }
+            }
+
+            if (!validate(form, rules)) {
+                return;
+            }
+
+            const total = cart.reduce(
+                (sum, item) =>
+                    sum +
+                    getProduct(item.id).price *
+                    item.qty,
+                0
+            );
+
+            const orders = load("orders", []);
+
+            orders.push({
+                date: new Date().toISOString(),
+                name: form.name.value.trim(),
+                email: form.email.value.trim(),
+                address: form.address.value.trim(),
+                items: cart,
+                total: total,
+                payment: form.pay.value
+            });
+
+            save("orders", orders);
+
+            localStorage.removeItem("cart");
+
+            updateCartCount();
+
+            const success = $("#success");
+
+            if (success) {
+                success.hidden = false;
+            }
+
+            form.reset();
+
+            if (cardBox) {
+                cardBox.hidden = true;
+            }
+
+            displaySummary();
+        });
+
+        displaySummary();
+    },
+
+    /* WISHLIST */
+
+    wishlist() {
+        const wishlistBox = $("#wishlist");
+
+        if (!wishlistBox) {
+            return;
+        }
+
+        function displayWishlist() {
+            const wishlist = load("wishlist", {});
+            const ids = Object.keys(wishlist);
+
+            if (!ids.length) {
+                wishlistBox.innerHTML = `
+                    <p>
+                        Nothing saved yet.
+                        <a href="products.html">
+                            Browse products
+                        </a>
+                    </p>
+                `;
+
+                return;
+            }
+
+            wishlistBox.innerHTML = ids.map(id => {
+                const product = getProduct(Number(id));
+
+                if (!product) {
+                    return "";
+                }
+
+                return `
+                    <article class="card">
+                        <div class="thumb">
+                            <img
+                                src="${product.image}"
+                                alt="${product.name}"
+                            >
+                        </div>
+
+                        <h3>${product.name}</h3>
+
+                        <p class="cat">
+                            ${product.category}
+                        </p>
+
+                        <p class="price">
+                            ${money(product.price)}
+                        </p>
+
+                        <label for="s${id}">
+                            Wishlist Status
+                        </label>
+
+                        <select
+                            id="s${id}"
+                            data-id="${id}"
+                        >
+                            ${[
+                                "Interested",
+                                "Owned",
+                                "Not Interested"
+                            ].map(status => `
+                                <option
+                                    ${wishlist[id] === status ? "selected" : ""}
+                                >
+                                    ${status}
+                                </option>
+                            `).join("")}
+                        </select>
+
+                        <br>
+
+                        <button
+                            type="button"
+                            class="btn small"
+                            data-rm="${id}"
+                        >
+                            Remove
+                        </button>
+                    </article>
+                `;
+            }).join("");
+        }
+
+        wishlistBox.addEventListener("change", event => {
+            if (!event.target.dataset.id) {
+                return;
+            }
+
+            const wishlist = load("wishlist", {});
+
+            wishlist[event.target.dataset.id] =
+                event.target.value;
+
+            save("wishlist", wishlist);
+
+            showToast("Wishlist status updated.");
+        });
+
+        wishlistBox.addEventListener("click", event => {
+            const button =
+                event.target.closest("[data-rm]");
+
+            if (!button) {
+                return;
+            }
+
+            const wishlist = load("wishlist", {});
+
+            delete wishlist[button.dataset.rm];
+
+            save("wishlist", wishlist);
+
+            displayWishlist();
+
+            showToast("Removed from wishlist.");
+        });
+
+        displayWishlist();
+    },
+
+    /* FEEDBACK */
+
+    feedback() {
+        const form = $("#feedback");
+
+        if (!form) {
+            return;
+        }
+
+        form.addEventListener("submit", event => {
+            event.preventDefault();
+
+            const rules = {
+                name: required("Name"),
+
+                email: emailRule,
+
+                message: value =>
+                    value.length >= 10
+                        ? ""
+                        : "Message must be at least 10 characters."
+            };
+
+            if (!validate(form, rules)) {
+                return;
+            }
+
+            const feedbackList = load("feedback", []);
+
+            feedbackList.push({
+                name: form.name.value.trim(),
+                email: form.email.value.trim(),
+                message: form.message.value.trim(),
+                date: new Date().toISOString()
+            });
+
+            save("feedback", feedbackList);
+
+            form.reset();
+
+            const success = $("#ok");
+
+            if (success) {
+                success.textContent =
+                    "Thanks! Your feedback has been submitted. 🎉";
+            }
+        });
+
+        document.querySelectorAll(".faq button").forEach(button => {
+            button.addEventListener("click", () => {
+                const panel =
+                    button.parentElement.nextElementSibling;
+
+                if (!panel) {
+                    return;
+                }
+
+                const opening = panel.hidden;
+
+                panel.hidden = !opening;
+
+                button.setAttribute(
+                    "aria-expanded",
+                    opening
+                );
+            });
+        });
+    }
 };
 
-/* ----------------------------------------------------------------------------
-   5. ROUTER INITIALIZATION GATEWAY
-   ---------------------------------------------------------------------------- */
-const targetPageMetadataIdAttribute = document.body.dataset.page;
-if (targetPageMetadataIdAttribute && pages[targetPageMetadataIdAttribute]) {
-  pages[targetPageMetadataIdAttribute]();
+/* ---------- Start Correct Page ---------- */
+
+const page = document.body.dataset.page;
+
+if (page && pages[page]) {
+    pages[page]();
 }

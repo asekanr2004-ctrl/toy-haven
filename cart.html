@@ -1,93 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Cart | Toy Haven</title>
-    
-    <!-- SEO and Mobile Theme Color Configurations -->
-    <meta name="description" content="Review the items in your Toy Haven cart.">
-    <meta name="theme-color" content="#5b3df5">
-    
-    <!-- PWA & Icon Assets Linking -->
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Toy Haven | Cart</title>
+
+    <meta
+        name="description"
+        content="View your Toy Haven shopping cart."
+    >
+
+    <meta
+        name="theme-color"
+        content="#5b3df5"
+    >
+
+    <link rel="icon" href="img/favicon.svg">
     <link rel="apple-touch-icon" href="img/icon-192.png">
-    
-    <!-- Main Stylesheet -->
+    <link rel="manifest" href="manifest.json">
+
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body data-page="cart">
 
-     <!-- Keyboard Focus Target Skip Link -->
-    <a class="skip" href="#main">Skip to content</a>
+    <a class="skip" href="#main">
+        Skip to main content
+    </a>
 
-    <!-- ==========================================================================
-       SITE HEADER NAVIGATION
-       ========================================================================== */ -->
     <header class="site-header">
-        <a class="logo" href="index.html">🧸 Toy Haven</a>
-        
-        <!-- Mobile Navigation Menu Hamburger Component -->
-        <button class="burger" aria-label="Toggle menu" aria-expanded="false" aria-controls="menu">
+
+        <a class="logo" href="index.html">
+            🧸 Toy Haven
+        </a>
+
+        <button
+            class="burger"
+            type="button"
+            aria-label="Open menu"
+            aria-expanded="false"
+        >
             <span></span>
             <span></span>
             <span></span>
         </button>
-        
-        <!-- Primary Site Navigation Menu -->
-        <nav aria-label="Main">
+
+        <nav>
             <ul id="menu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="products.html">Shop</a></li>
-                <li><a href="cart.html" aria-current="page">Cart<span id="count" class="badge">0</span></a></li>
-                <li><a href="wishlist.html">Wishlist</a></li>
-                <li><a href="feedback.html">Support</a></li>
+
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+
+                <li>
+                    <a href="products.html">Products</a>
+                </li>
+
+                <li>
+                    <a href="cart.html" aria-current="page">
+                        Cart
+                        <span class="badge" id="count">0</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="wishlist.html">Wishlist</a>
+                </li>
+
+                <li>
+                    <a href="checkout.html">Checkout</a>
+                </li>
+
+                <li>
+                    <a href="feedback.html">Feedback</a>
+                </li>
+
             </ul>
         </nav>
     </header>
 
-    <!-- ==========================================================================
-       MAIN VIEW INTERACTIVE CONTENT AREA
-       ========================================================================== */ -->
-    <main id="main">
-        <section class="wrap">
-            <h1>Your Cart</h1>
-            <div id="cart"></div>
-        </section>
+    <main id="main" class="wrap">
+
+        <h1>Your Shopping Cart</h1>
+
+        <section id="cart"></section>
+
     </main>
 
-    <!-- ==========================================================================
-       GLOBAL SITE FOOTER
-       ========================================================================== */ -->
     <footer class="site-footer">
-        <div>
-            <strong>Toy Haven</strong>
-            <p>Figurines, toys, board games &amp; diecast cars.</p>
-        </div>
-        
-        <nav aria-label="Footer">
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="products.html">Shop</a></li>
-                <li><a href="cart.html">Cart</a></li>
-                <li><a href="wishlist.html">Wishlist</a></li>
-                <li><a href="feedback.html">Support</a></li>
-            </ul>
-        </nav>
 
-        <form id="newsletter" novalidate>
-            <label for="nl-email">Join our newsletter</label>
-            <div class="row">
-                <input id="nl-email" name="email" type="email" placeholder="you@example.com">
-                <button class="btn" type="submit">Subscribe</button>
-            </div>
-            <span class="err" id="e-email" role="alert"></span>
-        </form>
+        <div>
+            <h2>Toy Haven</h2>
+
+            <p>
+                Your place for toys, games and collectibles.
+            </p>
+        </div>
+
+        <div>
+            <h2>Quick Links</h2>
+
+            <ul>
+                <li>
+                    <a href="products.html">Products</a>
+                </li>
+
+                <li>
+                    <a href="wishlist.html">Wishlist</a>
+                </li>
+
+                <li>
+                    <a href="feedback.html">Support</a>
+                </li>
+            </ul>
+        </div>
+
+        <div>
+            <h2>Newsletter</h2>
+
+            <form id="newsletter">
+
+                <label for="nl-email">
+                    Email address
+                </label>
+
+                <div class="row">
+                    <input
+                        id="nl-email"
+                        name="email"
+                        type="email"
+                        placeholder="you@example.com"
+                        required
+                    >
+
+                    <button class="btn accent" type="submit">
+                        Join
+                    </button>
+                </div>
+
+                <span id="e-email" class="err"></span>
+
+            </form>
+        </div>
+
     </footer>
 
-    <div id="toast" role="status" aria-live="polite"></div>
+    <div id="toast" role="status"></div>
 
     <script src="js/app.js"></script>
 </body>
+
 </html>

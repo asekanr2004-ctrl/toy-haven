@@ -1,109 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Shop | Toy Haven</title>
-    
-    <!-- SEO and Mobile Theme Color Configurations -->
-    <meta name="description" content="Browse and filter figurines, toys, board games and diecast cars.">
-    <meta name="theme-color" content="#5b3df5">
-    
-    <!-- PWA & Icon Assets Linking -->
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Toy Haven | Products</title>
+
+    <meta
+        name="description"
+        content="Browse Toy Haven products."
+    >
+
+    <meta
+        name="theme-color"
+        content="#5b3df5"
+    >
+
+    <link rel="icon" href="img/favicon.svg">
     <link rel="apple-touch-icon" href="img/icon-192.png">
-    
-    <!-- Core Application Stylesheet -->
+    <link rel="manifest" href="manifest.json">
+
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body data-page="products">
 
-    <!-- Keyboard Focus Target Skip Link -->
-    <a class="skip" href="#main">Skip to content</a>
+    <a class="skip" href="#main">
+        Skip to main content
+    </a>
 
-    <!-- ==========================================================================
-       SITE HEADER NAVIGATION 
-       ========================================================================== */ -->
     <header class="site-header">
-        <a class="logo" href="index.html">🧸 Toy Haven</a>
-        
-        <!-- Mobile Navigation Menu Hamburger Component -->
-        <button class="burger" aria-label="Toggle menu" aria-expanded="false" aria-controls="menu">
+
+        <a class="logo" href="index.html">
+            🧸 Toy Haven
+        </a>
+
+        <button
+            class="burger"
+            type="button"
+            aria-label="Open menu"
+            aria-expanded="false"
+        >
             <span></span>
             <span></span>
             <span></span>
         </button>
 
-        <nav aria-label="Main">
+        <nav>
             <ul id="menu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="products.html" aria-current="page">Shop</a></li>
-                <li><a href="cart.html">Cart<span id="count" class="badge">0</span></a></li>
-                <li><a href="wishlist.html">Wishlist</a></li>
-                <li><a href="feedback.html">Support</a></li>
+
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+
+                <li>
+                    <a href="products.html" aria-current="page">
+                        Products
+                    </a>
+                </li>
+
+                <li>
+                    <a href="cart.html">
+                        Cart
+                        <span class="badge" id="count">0</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="wishlist.html">
+                        Wishlist
+                    </a>
+                </li>
+
+                <li>
+                    <a href="checkout.html">
+                        Checkout
+                    </a>
+                </li>
+
+                <li>
+                    <a href="feedback.html">
+                        Feedback
+                    </a>
+                </li>
+
             </ul>
         </nav>
     </header>
 
-    <!-- ==========================================================================
-       PRIMARY CORE APPLICATION SHOP CATALOG 
-       ========================================================================== */ -->
-    <main id="main">
-        <section class="wrap">
-            <h1>Shop All Products</h1>
+    <main id="main" class="wrap">
 
-            <div class="tools">
-                <!-- Screen Reader Only Label for Accessible Form Processing -->
-                <label for="search" class="sr">Search products</label>
-                <input id="search" type="search" placeholder="Search by name...">
+        <h1>Our Products</h1>
 
-                <div id="filters" role="group" aria-label="Filter by category"></div>
-            </div>
+        <div class="tools">
 
-            <p id="results" aria-live="polite"></p>
+            <input
+                id="search"
+                type="search"
+                placeholder="Search products..."
+                aria-label="Search products"
+            >
 
-            <div id="grid" class="grid"></div>
-        </section>
-        
-        <!-- Expanded Product Views -->
-        <dialog id="modal" aria-labelledby="m-title">
-            <div id="m-body"></div>
-            <button class="btn" id="m-close">Close</button>
-        </dialog>
+            <div id="filters"></div>
+
+        </div>
+
+        <p id="results"></p>
+
+        <section
+            id="grid"
+            class="grid"
+            aria-label="Product list"
+        ></section>
+
     </main>
 
-    <!-- ==========================================================================
-       GLOBAL SITE FOOTER 
-       ========================================================================== */ -->
-    <footer class="site-footer">
-        <div>
-            <strong>Toy Haven</strong>
-            <p>Figurines, toys, board games &amp; diecast cars.</p>
-        </div>
-        
-        <nav aria-label="Footer">
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="products.html">Shop</a></li>
-                <li><a href="cart.html">Cart</a></li>
-                <li><a href="wishlist.html">Wishlist</a></li>
-                <li><a href="feedback.html">Support</a></li>
-            </ul>
-        </nav>
+    <dialog id="modal" aria-labelledby="m-title">
 
-        <form id="newsletter" novalidate>
-            <label for="nl-email">Join our newsletter</label>
-            <div class="row">
-                <input id="nl-email" name="email" type="email" placeholder="you@example.com">
-                <button class="btn" type="submit">Subscribe</button>
-            </div>
-            <span class="err" id="e-email" role="alert"></span>
-        </form>
+        <div id="m-body"></div>
+
+        <button
+            id="m-close"
+            type="button"
+            class="btn"
+        >
+            Close
+        </button>
+
+    </dialog>
+
+    <footer class="site-footer">
+
+        <div>
+            <h2>Toy Haven</h2>
+
+            <p>
+                Your place for toys, games and collectibles.
+            </p>
+        </div>
+
+        <div>
+            <h2>Quick Links</h2>
+
+            <ul>
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+
+                <li>
+                    <a href="cart.html">Cart</a>
+                </li>
+
+                <li>
+                    <a href="feedback.html">Support</a>
+                </li>
+            </ul>
+        </div>
+
+        <div>
+            <h2>Newsletter</h2>
+
+            <form id="newsletter">
+
+                <label for="nl-email">
+                    Email address
+                </label>
+
+                <div class="row">
+                    <input
+                        id="nl-email"
+                        name="email"
+                        type="email"
+                        placeholder="you@example.com"
+                        required
+                    >
+
+                    <button class="btn accent" type="submit">
+                        Join
+                    </button>
+                </div>
+
+                <span id="e-email" class="err"></span>
+
+            </form>
+        </div>
+
     </footer>
 
-    <div id="toast" role="status" aria-live="polite"></div>
+    <div id="toast" role="status"></div>
 
     <script src="js/app.js"></script>
 </body>
+
 </html>
